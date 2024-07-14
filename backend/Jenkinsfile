@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_IMAGE = "kamran7777777/auth-backend"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/kamraniswinner/amour.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'npm install'
+                        sh 'npm run build'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh "docker build -t ${DOCKER_IMAGE}:latest ."
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin"
+                    sh "docker push ${DOCKER_IMAGE}:latest"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build, Docker image creation, and push successful!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
