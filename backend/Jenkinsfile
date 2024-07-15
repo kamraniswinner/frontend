@@ -9,7 +9,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/kamraniswinner/amour.git'
+                git 'https://github.com/kamraniswinner/amour.git'
+                dir('backend') {
+                    // Ensure we're working in the backend directory
+                }
             }
         }
 
@@ -27,7 +30,7 @@ pipeline {
             steps {
                 script {
                     dir('backend') {
-                        sh "sudo docker build -t ${DOCKER_IMAGE}:latest ."
+                        sh "docker build -t ${DOCKER_IMAGE}:latest ."
                     }
                 }
             }
@@ -37,7 +40,7 @@ pipeline {
             steps {
                 script {
                     sh "echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin"
-                    sh "sudo docker push ${DOCKER_IMAGE}:latest"
+                    sh "docker push ${DOCKER_IMAGE}:latest"
                 }
             }
         }
