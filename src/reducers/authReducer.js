@@ -2,11 +2,12 @@
 const initialState = {
   isAuthenticated: false,
   user: null,
+  users: [],
   loading: false,
   error: null,
   signupSuccess: false,
   resetPasswordLinkSuccess: false,
-  passwordResetSuccess:false,
+  passwordResetSuccess: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -17,6 +18,7 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, isAuthenticated: true, user: action.payload };
     case 'LOGIN_FAILURE':
       return { ...state, loading: false, error: action.payload };
+
     case 'LOGOUT':
       return { ...state, isAuthenticated: false, user: null };
 
@@ -30,7 +32,7 @@ const authReducer = (state = initialState, action) => {
     case 'PASSWORD_RESET_LINK_REQUEST':
       return { ...state, loading: true, error: null, resetPasswordLinkSuccess: false };
     case 'PASSWORD_RESET_LINK_SUCCESS':
-      return { ...state, loading: false, resetPasswordlinkSuccess: true };
+      return { ...state, loading: false, resetPasswordLinkSuccess: true };
     case 'PASSWORD_RESET_LINK_FAILURE':
       return { ...state, loading: false, error: action.payload, resetPasswordLinkSuccess: false };
 
@@ -40,6 +42,20 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, passwordResetSuccess: true };
     case 'PASSWORD_RESET_FAILURE':
       return { ...state, loading: false, error: action.payload, passwordResetSuccess: false };
+
+    case 'GET_USER_REQUEST':
+      return { ...state, loading: true, error: null };
+    case 'GET_USER_SUCCESS':
+      return { ...state, loading: false, user: action.payload };
+    case 'GET_USER_FAILURE':
+      return { ...state, loading: false, error: action.payload };
+
+    case 'GET_ALL_USERS_REQUEST':
+      return { ...state, loading: true, error: null };
+    case 'GET_ALL_USERS_SUCCESS':
+      return { ...state, loading: false, users: action.payload };
+    case 'GET_ALL_USERS_FAILURE':
+      return { ...state, loading: false, error: action.payload };
 
     default:
       return state;

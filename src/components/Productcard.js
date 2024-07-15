@@ -59,26 +59,37 @@ const CardButton = styled.button`
   }
 `;
 
-const ProductCard = ({ image, title, description, price, onAddToCart }) => {
+const FavoriteIcon = styled.div`
+  color: ${(props) => (props.isFavourite ? 'red' : 'grey')};
+  cursor: pointer;
+`;
+
+const ProductCard = ({ images, title, description, price, onAddToCart, isfavourite, onToggleFavorite }) => {
   return (
     <CardContainer>
-      <CardImage src={image} alt={title} />
+      <CardImage src={images[0]} alt={title} />
       <CardContent>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
         <CardPrice>{price}</CardPrice>
         <CardButton onClick={onAddToCart}>Add to Cart</CardButton>
+        <FavoriteIcon isfavourite={isfavourite} onClick={onToggleFavorite}>
+          ❤️
+        </FavoriteIcon>
       </CardContent>
     </CardContainer>
   );
 };
 
 ProductCard.propTypes = {
-  image: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   onAddToCart: PropTypes.func.isRequired,
+  isFavourite: PropTypes.bool.isRequired,
+  onToggleFavorite: PropTypes.func.isRequired,
 };
 
 export default ProductCard;
+
