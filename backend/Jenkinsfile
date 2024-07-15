@@ -15,10 +15,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    withEnv(["PATH+NODE=${NODE_PATH}"]) {
-                        dir('backend') {
-                            sh 'npm install'
-                        }
+                    dir('backend') {
+                        sh 'npm install'
                     }
                 }
             }
