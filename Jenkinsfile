@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/kamraniswinner/amour.git'
+                git 'https://github.com/kamraniswinner/yeni-proje-frontend.git'
                 dir('frontend') {
                     // Ensure we're working in the frontend directory
                 }
