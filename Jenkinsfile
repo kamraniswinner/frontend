@@ -10,7 +10,7 @@ pipeline {
             steps {
                 git 'https://github.com/kamraniswinner/yeni-proje-frontend.git'
                 dir('frontend') {
-                    // Ensure we're working in the frontend directoryyy
+                    // Ensure we're working in the frontend directory
                 }
             }
         }
