@@ -10,7 +10,7 @@ import Title from '../components/Title';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import getUserIdFromToken from '../utils/getUserIdFromToken';
+//import getUserIdFromToken from '../utils/getUserIdFromToken';
 
 const ProductListContainer = styled(Slider)`
   .slick-slide {
@@ -26,8 +26,8 @@ const Home = () => {
   const { loading, products, error } = productState;
   const favouriteState = useSelector((state) => state.favourite);
   const { favourites } = favouriteState;
-  const token = localStorage.getItem('token');
-  const userId = getUserIdFromToken(token);
+  //const token = localStorage.getItem('token');
+  //const userId = getUserIdFromToken(token);
 
   useEffect(() => {
     dispatch(fetchProducts());
